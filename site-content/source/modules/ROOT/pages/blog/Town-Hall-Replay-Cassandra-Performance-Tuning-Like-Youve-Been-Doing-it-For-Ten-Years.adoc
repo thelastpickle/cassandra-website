@@ -1,4 +1,4 @@
-= Town Hall Replay: Cassandra Performance Tuning Like You've Been Doing it For Ten Years
+= Town Hall Replay: Cassandra Performance Tuning Like You\'ve Been Doing it For Ten Years
 :page-layout: single-post
 :page-role: blog-post
 :page-post-date: July 27, 2023
