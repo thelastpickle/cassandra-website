@@ -1,0 +1,277 @@
+= Survey Results Analysis
+:page-layout: single-post
+:page-role: blog-post
+:page-post-date: October 25, 2024
+:page-post-author: The Apache Cassandra Community
+:description: 2024 Apache Cassandra User Survey Results Analysis
+:keywords: 
+
+:doctype: article
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+:imagesdir: blog/2024_survey_images
+
+== 2024 User Survey Results
+
+=== 1. What Use Case(s) are you using Cassandra for today?
+
+_Total responses: 140_
+
+image::blog/2024_survey_images/000_What_Use_Case(s)_are_you_using.png[What Use Case(s) are you using Cassandra for today?]
+
+.Responses that appeared once:
+* Everything
+* Chat Application
+* Multi-tenant tables for SaaS applicwtion
+* I haven't used it before so I'm learning all about it!
+* Request Management System
+* primary datastore of multiple large online services
+* Internal service discovery application
+* Video games!
+* Maintaining and contributing to the Cassandra project
+* All of the above
+* Generally used for storing application data
+* Financial
+* Online charging
+* Customer 360
+* API Management
+* business intelligence
+* entitlements
+* game stats
+* game saves
+* Web profiles
+* Genomic Data Storage Collection: https://en.wikipedia.org/wiki/GenBank
+* Full text search using Solr on top of Cassandra
+
+=== 2. What Use Case(s) are you planning to use Cassandra for in the future?
+
+_Total responses: 140_
+
+image::blog/2024_survey_images/001_What_Use_Case(s)_are_you_plann.png[What Use Case(s) are you planning to use Cassandra for in the future?]
+
+.Responses that appeared once:
+* Keep adding features
+* Request Management Workflow
+* for all )
+* using cassandra as a general purpose database for further products...
+* well
+* More games!
+* Everything
+* All of the above
+* Not yet
+* More of the same above.
+* Financial data analytics
+* No other cases planned
+* Online charging
+* I'm not sure yet but I'm cooking up ideas of what I could use it for in my personal projects or future employers!
+
+=== 3. What was your primary reason for choosing Cassandra over other databases?
+
+_Total responses: 139_
+
+image::blog/2024_survey_images/002_What_was_your_primary_reason_f.png[What was your primary reason for choosing Cassandra over other databases?]
+
+.Responses that appeared once:
+* Big data management
+* Availability
+* 
+* High availability
+* write performance
+* Data structure
+
+=== 4. How would you rate your overall experience with Apache Cassandra on a scale of 1-10? 
+
+image::blog/2024_survey_images/003_How_would_you_rate_your_overal.png[How would you rate your overall experience with Apache Cassandra on a scale of 1-10? ]
+
+=== 5. Have you recommended Apache Cassandra to others?
+
+_Total responses: 140_
+
+image::blog/2024_survey_images/004_Have_you_recommended_Apache_Ca.png[Have you recommended Apache Cassandra to others?]
+
+=== 6. How do you run Cassandra today?
+
+_Total responses: 138_
+
+image::blog/2024_survey_images/005_How_do_you_run_Cassandra_today.png[How do you run Cassandra today?]
+
+=== 7. If self-managed, where do you run Cassandra?
+
+_Total responses: 134_
+
+image::blog/2024_survey_images/006_If_self-managed,_where_do_you_.png[If self-managed, where do you run Cassandra?]
+
+=== 8. If planning a change, where will you run Cassandra?
+
+_Total responses: 105_
+
+image::blog/2024_survey_images/007_If_planning_a_change,_where_wi.png[If planning a change, where will you run Cassandra?]
+
+=== 9. Which version of Cassandra are you using? 
+
+_Total responses: 137_
+
+image::blog/2024_survey_images/008_Which_version_of_Cassandra_are.png[Which version of Cassandra are you using? ]
+
+=== 10. What is your approximate total data volume?
+
+_Total responses: 135_
+
+image::blog/2024_survey_images/009_What_is_your_approximate_total.png[What is your approximate total data volume?]
+
+=== 11. How large is your C* deployment?
+
+_Total responses: 136_
+
+image::blog/2024_survey_images/010_How_large_is_your_C*_deploymen.png[How large is your C* deployment?]
+
+=== 12. What programming languages do you use to connect to Cassandra?
+
+_Total responses: 138_
+
+
+image::blog/2024_survey_images/011_What_programming_languages_do_.png[What programming languages do you use to connect to Cassandra?]
+
+.Responses that appeared once:
+* Angular 17
+* Kotlin
+* Ruby
+
+=== 13. How does Cassandra fit into your overall data management strategy?
+
+_Total responses: 135_
+
+image::blog/2024_survey_images/012_How_does_Cassandra_fit_into_yo.png[How does Cassandra fit into your overall data management strategy?]
+
+=== 14. What’s the longest continuous service you’ve had on any cluster? (years-months)
+
+
+image::blog/2024_survey_images/longest_uptime_box.png[What’s the longest continuous service you’ve had on any cluster? (years-months)]
+
+
+=== 15. What features of Apache Cassandra do you use the most?
+
+_Total responses: 134_
+
+image::blog/2024_survey_images/015_What_features_of_Apache_Cassan.png[What features of Apache Cassandra do you use the most?]
+
+.Responses that appeared once:
+* DSE Search
+
+=== 16. Have you integrated Apache Cassandra with other technologies? If so, which ones?
+
+_Total responses: 112_
+
+image::blog/2024_survey_images/Have_you_integrated_cassandra.jpeg[Have you integrated Apache Cassandra with other technologies? If so, which ones?]
+.Responses that appeared once:
+* Lucene inddex plugin
+* DSE Search
+* No
+
+=== 17. If self-managed, how do you deploy and manage your Cassandra clusters?
+
+_Total responses: 132_
+
+image::blog/2024_survey_images/017_If_self-managed,_how_do_you_de.png[If self-managed, how do you deploy and manage your Cassandra clusters?]
+
+=== 18. If planning a change, how will you deploy and manage your Cassandra clusters?
+
+_Total responses: 103_
+
+image::blog/2024_survey_images/018_If_planning_a_change,_how_will.png[If planning a change, how will you deploy and manage your Cassandra clusters?]
+
+=== 19. Current trends: Are you using Apache Cassandra for Generative AI Apps? 
+
+_Total responses: 130_
+
+image::blog/2024_survey_images/019_Current_trends_Are_you_using_.png[Current trends: Are you using Apache Cassandra for Generative AI Apps? ]
+
+=== 20. Current trends: Do you currently have Generative AI use cases in your apps in production? 
+
+_Total responses: 130_
+
+image::blog/2024_survey_images/020_Current_trends_Do_you_current.png[Current trends: Do you currently have Generative AI use cases in your apps in production? ]
+
+=== 21. How likely are you to continue using Apache Cassandra in the future?
+
+image::blog/2024_survey_images/021_How_likely_are_you_to_continue.png[How likely are you to continue using Apache Cassandra in the future?]
+
+=== 22. If you are considering no longer using Cassandra in the future, what are the reasons?
+
+_Total responses: 56_
+
+image::blog/2024_survey_images/022_If_you_are_considering_no_long.png[If you are considering no longer using Cassandra in the future, what are the reasons?]
+
+=== 23. If running an older version of Cassandra, what timeframe do you have for upgrading to the next major version? 
+
+_Total responses: 120_
+
+image::blog/2024_survey_images/023_If_running_an_older_version_of.png[If running an older version of Cassandra, what timeframe do you have for upgrading to the next major version? ]
+
+=== 24. What percentage of your C* workloads will you be migrating to the cloud in the next 12 months?
+
+_Total responses: 119_
+
+image::blog/2024_survey_images/024_What_percentage_of_your_C*_wor.png[What percentage of your C* workloads will you be migrating to the cloud in the next 12 months?]
+
+=== 25. What proposed features are you most interested in the upcoming versions? (Details here) 
+
+_Total responses: 123_
+
+image::blog/2024_survey_images/025_What_proposed_features_are_you.png[What proposed features are you most interested in the upcoming versions? (Details here) ]
+
+=== 26. Which of these most closely matches your job description?
+
+_Total responses: 136_
+
+image::blog/2024_survey_images/026_Which_of_these_most_closely_ma.png[Which of these most closely matches your job description?]
+
+.Responses that appeared once:
+* data engineer
+* IT Consultant
+* Full stack
+* Executive
+
+=== 27. How long have you been using Cassandra?
+
+_Total responses: 136_
+
+image::blog/2024_survey_images/027_How_long_have_you_been_using_C.png[How long have you been using Cassandra?]
+
+=== 28. Have you used Cassandra's community forums, such as the Cassandra mailing list or Stack Overflow? If so, how was your experience?
+
+image::blog/2024_survey_images/028_Have_you_used_Cassandra's_comm.png[Have you used Cassandra's community forums, such as the Cassandra mailing list or Stack Overflow? If so, how was your experience?]
+
+=== 29. Where do you prefer to connect with others in the Cassandra community?
+
+_Total responses: 129_
+
+image::blog/2024_survey_images/029_Where_do_you_prefer_to_connect.png[Where do you prefer to connect with others in the Cassandra community?]
+
+=== 30. How easy or difficult was it for you to learn how to use Cassandra?
+
+image::blog/2024_survey_images/030_How_easy_or_difficult_was_it_f.png[How easy or difficult was it for you to learn how to use Cassandra?]
+
+=== 31. Which of the following methods do you use to keep up to date on Cassandra?
+
+_Total responses: 131_
+
+image::blog/2024_survey_images/031_Which_of_the_following_methods.png[Which of the following methods do you use to keep up to date on Cassandra?]
+
+.Responses that appeared once:
+* source code
+* GitHub - PRs and after that test features by my self
+* Twitter/LinkedIn
+* PMC / Committer
+* Mailing List
+* mailing list
+* Source code
+* easy-cass-lab
+* Datastax
+* Jira/github
+
+=== 32. How would you rate the documentation and resources available for Cassandra?
+
+image::blog/2024_survey_images/032_How_would_you_rate_the_documen.png[How would you rate the documentation and resources available for Cassandra?]
