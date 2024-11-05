@@ -205,10 +205,12 @@ render_site_content_to_html() {
 }
 
 
-prepare_site_html_for_publication() {
+generate_native_protocol_specs_pages() {
   log_message "INFO" "Processing native protocols spec page"
   sudo /usr/local/bin/process-native-protocol-specs-in-docker.sh
+}
 
+prepare_site_html_for_publication() {
   pushd "${CASSANDRA_WEBSITE_DIR}" > /dev/null
 
   # copy everything to content/ directory
@@ -407,6 +409,7 @@ then
   export NODE_PATH="$(npm -g root)"
   export DOCSEARCH_INDEX_VERSION=latest
 
+  generate_native_protocol_specs_pages
   render_site_content_to_html
 
   prepare_site_html_for_publication

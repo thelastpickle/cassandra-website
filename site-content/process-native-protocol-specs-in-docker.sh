@@ -11,7 +11,7 @@ WEBSITE_DIR="/home/build/cassandra-website"
 
 # Step 0: Download and install Go
 echo "Downloading Go $GO_VERSION..."
-wget https://golang.org/dl/$GO_TAR
+wget -q https://golang.org/dl/$GO_TAR
 
 echo "Installing Go..."
 tar -C /usr/local -xzf $GO_TAR
@@ -27,7 +27,7 @@ go build -o cqlprotodoc
 
 # Step 2: Process the spec files using the parser
 echo "Processing the .spec files..."
-"$PARSER_DIR"/cqlprotodoc "$WEBSITE_DIR/site-content/source/modules/ROOT/examples/TEXT" "$WEBSITE_DIR/site-content/build/html/_"
+"$PARSER_DIR"/cqlprotodoc "$WEBSITE_DIR/site-content/source/modules/ROOT/examples/TEXT" "$WEBSITE_DIR/site-content/source/modules/ROOT/partials/"
 
 # Step 3: Cleanup - Remove the Cassandra and parser directories
 echo "Cleaning up..."
