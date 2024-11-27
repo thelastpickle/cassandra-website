@@ -220,7 +220,7 @@ build_container() {
     docker_build_args+=(--build-arg "$(sed '1,/:/ s/:/=/' <<< "${key_value}")")
   done
 
-  exec_docker_build_command "-f ./site-${site_component}/Dockerfile -t ${container_tag} ${docker_build_args[*]} ./site-${site_component}/"
+  exec_docker_build_command "--platform linux/x86_64 -f ./site-${site_component}/Dockerfile -t ${container_tag} ${docker_build_args[*]} ./site-${site_component}/"
 }
 
 parse_file_uri() {
@@ -519,7 +519,7 @@ EOF
     env_args+=("-e ANTORA_UI_BUNDLE_URL=${url_source_value}")
   fi
 
-  exec_docker_run_command --name "website_content" "${port_map_option} ${vol_args[*]} ${env_file_arg} ${env_args[*]} ${container_tag} ${command_generate_docs} ${container_command}"
+  exec_docker_run_command --name "website_content" --platform linux/x86_64 "${port_map_option} ${vol_args[*]} ${env_file_arg} ${env_args[*]} ${container_tag} ${command_generate_docs} ${container_command}"
 }
 
 run_website_command() {
@@ -574,9 +574,9 @@ run_docker_website_ui_command() {
 
   if [ "${container_command}" = "help" ]
   then
-    exec_docker_run_command --name "website_ui" -v "${volume_map_option}" "${container_tag}"
+    exec_docker_run_command --name "website_ui" --platform linux/x86_64 -v "${volume_map_option}" "${container_tag}"
   else
-    exec_docker_run_command --name "website_ui" "${port_map_option}" -v "${volume_map_option}" "${container_tag}" "${container_command}"
+    exec_docker_run_command --name "website_ui" --platform linux/x86_64 "${port_map_option}" -v "${volume_map_option}" "${container_tag}" "${container_command}"
   fi
 }
 
