@@ -42,12 +42,10 @@ Banner: The section below is where the updated banner content goes.
 [openblock, home-hero-content text-center pa-large]
 --------
 [discrete]
-image:events/cassandra-summit-banner-1000x250.png[Cassandra Summit 2023]
-[discrete]
-=== Talks and Keynotes videos are published!
+=== Talks and Keynotes videos from the Cassandra Summit are published!
 
 [.btn.btn--grad]
-https://events.linuxfoundation.org/cassandra-summit/program/schedule/[Watch the videos^]
+https://events.linuxfoundation.org/cassandra-summit/program/schedule/[Watch all the videos^]
 --------
 ------
 ----
