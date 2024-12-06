@@ -1,4 +1,19 @@
 #!/bin/bash
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 # Abort script if a command fails
 set -e
@@ -7,7 +22,6 @@ export CASSANDRA_USE_JDK11=true
 export CASSANDRA_WEBSITE_DIR="${BUILD_DIR}/cassandra-website"
 export CASSANDRA_SOURCE_DIR="${BUILD_DIR}/cassandra"
 export CASSANDRA_WORKING_DIR="${BUILD_DIR}/working/cassandra"
-export CASSANDRA_WORKING_DOC="${CASSANDRA_WORKING_DIR}/doc"
 GIT_USER_SETUP="false"
 
 setup_git_user() {
@@ -49,10 +63,10 @@ generate_cassandra_versioned_docs() {
     commit_changes_to_branch="disabled"
   fi
 
+  pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
   for version in ${GENERATE_CASSANDRA_VERSIONS}
   do
     log_message "INFO" "Checking out '${version}'"
-    pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
     git clean -xdff
     git checkout "${version}"
 
@@ -70,13 +84,16 @@ generate_cassandra_versioned_docs() {
       # For Cassandra 3.11 docs use JDK 8
       java_version="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
       javac_version="/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
-      ant_cmd_options=""
-    else
+    elif [ "$(cut -d'.' -f1 <<< "${doc_version}")" -lt 5 ]
+    then
       # For Cassandra 4.0+ docs use JDK 11
-      # TODO – from 5 onwards, we can detect the default JDK version from the build.xml file
       java_version="/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
       javac_version="/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
       ant_cmd_options="-Duse.jdk11=true"
+    else
+      java_version_=$(grep 'property\s*name="java.default"' build.xml |sed -ne 's/.*value="\([^"]*\)".*/\1/p')
+      java_version="/usr/lib/jvm/java-${java_version_}-openjdk-amd64/bin/java"
+      javac_version="/usr/lib/jvm/java-${java_version_}-openjdk-amd64/bin/javac"
     fi
     sudo update-alternatives --set java ${java_version}
     sudo update-alternatives --set javac ${javac_version}
@@ -84,9 +101,7 @@ generate_cassandra_versioned_docs() {
     log_message "INFO" "Using Java compiler version $(javac -version) to compile Cassandra JARs"
     ant realclean
     ant "${ant_cmd_options}" gen-asciidoc
-    popd > /dev/null
 
-    pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
     if [ "${commit_changes_to_branch}" = "enabled" ]
     then
       # Remove the doc/* directory entries in the .gitignore file so we can commit the generated docs to the working
@@ -204,25 +219,6 @@ render_site_content_to_html() {
   popd > /dev/null
 }
 
-generate_native_protocol_specs_pages() {
-  log_message "INFO" "Processing native protocols spec page"
-  for version in ${GENERATE_CASSANDRA_VERSIONS}
-    do
-      log_message "INFO" "Checking out '${version}'"
-      pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
-      git clean -xdff
-      git checkout "${version}"
-
-      local doc_version=""
-      doc_version=$(grep 'property\s*name=\"base.version\"' build.xml |sed -ne 's/.*value=\"\([^"]*\)\".*/\1/p')
-      if [ -d "${CASSANDRA_WEBSITE_DIR}/site-content/build/html/Cassandra/$(cut -d'.' -f1-2 <<< "${doc_version}")/cassandra/native-protocol" ]
-      then
-        sudo /usr/local/bin/process-native-protocol-specs-in-docker.sh "$(cut -d'.' -f1-2 <<< "${doc_version}")"
-      fi
-      popd > /dev/null
-    done
-}
-
 prepare_site_html_for_publication() {
   pushd "${CASSANDRA_WEBSITE_DIR}" > /dev/null
 
@@ -230,7 +226,6 @@ prepare_site_html_for_publication() {
   log_message "INFO" "Moving site HTML to content/"
   mkdir -p content/doc
   cp -r site-content/build/html/* content/
-  #rm -f content/_/sed*
 
   # remove hardcoded domain name, and empty domain names first before we duplicate and documentation
   content_files_to_change=($(grep -rl 'https://cassandra.apache.org/' content/))
@@ -332,15 +327,6 @@ run_preview_mode() {
     render_site_content_to_html
   fi
 
-  if [ "${COMMAND_GENERATE_DOCS}" = "run" ]
-  then
-    export -f generate_native_protocol_specs_pages
-    on_change_functions="${on_change_functions} && generate_native_protocol_specs_pages"
-
-    GENERATE_CASSANDRA_VERSIONS=$(cut -d' ' -f1 <<< "${GENERATE_CASSANDRA_VERSIONS}")
-  fi
-
-
   pushd "${CASSANDRA_WEBSITE_DIR}/site-content/build/html" > /dev/null
   live-server --port=5151 --host=0.0.0.0 --no-browser --no-css-inject --wait=2000 &
   popd > /dev/null
@@ -432,11 +418,6 @@ then
   export DOCSEARCH_INDEX_VERSION=latest
 
   render_site_content_to_html
-if [ "${COMMAND_GENERATE_DOCS}" = "run" ]
-then
-  generate_native_protocol_specs_pages
-fi
-
   prepare_site_html_for_publication
 fi
 
