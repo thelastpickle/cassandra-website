@@ -1,0 +1,55 @@
+{{- /*gotype: cqlprotodoc.templateData*/ -}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{.Title}}</title>
+    <style>
+        nav ol {
+            margin: 0;
+            padding: 0;
+            padding-left: 1em;
+        }
+        nav li {
+            list-style: none;
+        }
+        nav.top ul {
+            margin: 0;
+            padding: 0;
+            background: #eee;
+            color: black;
+        }
+        nav.top ul li {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<!--
+{{.LicenseHTML}}
+-->
+    <h1>{{.Title}}</h1>
+    <h2>Table of Contents</h2>
+        <nav>
+            <ol>
+                {{ template "tocNodes" .TOCTree }}
+            </ol>
+        </nav>
+    {{ range .Sections }}
+        <h{{.Level}} id="s{{.Number}}">{{.Number}} {{.Title}}</h{{.Level}}>
+        <pre>{{.BodyHTML}}</pre>
+    {{ end }}
+</body>
+</html>
+{{ define "tocNodes" }}
+    {{- /*gotype: cqlprotodoc.TOCNode*/ -}}
+    {{ range . }}
+        <li id="toc{{.Number}}">{{.Number}}
+            {{if .Exists}}<a href="#s{{.Number}}">{{.Title}}</a>{{else}}{{.Title}}{{end}}
+        {{ with .Children }}
+            <ol>
+                {{ template "tocNodes" . }}
+            </ol>
+        {{ end}}
+        </li>
+    {{ end }}
+{{ end }}

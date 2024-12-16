@@ -33,6 +33,7 @@ RUN apt update && \
     apt install -y \
         openjdk-8-jdk \
         openjdk-11-jdk \
+        openjdk-17-jdk \
         python3 \
         python3-pip \
         ant \

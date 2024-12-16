@@ -1,4 +1,19 @@
 #!/bin/bash
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 # Abort script if a command fails
 set -e
@@ -7,7 +22,6 @@ export CASSANDRA_USE_JDK11=true
 export CASSANDRA_WEBSITE_DIR="${BUILD_DIR}/cassandra-website"
 export CASSANDRA_SOURCE_DIR="${BUILD_DIR}/cassandra"
 export CASSANDRA_WORKING_DIR="${BUILD_DIR}/working/cassandra"
-export CASSANDRA_WORKING_DOC="${CASSANDRA_WORKING_DIR}/doc"
 GIT_USER_SETUP="false"
 
 setup_git_user() {
@@ -49,10 +63,10 @@ generate_cassandra_versioned_docs() {
     commit_changes_to_branch="disabled"
   fi
 
+  pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
   for version in ${GENERATE_CASSANDRA_VERSIONS}
   do
     log_message "INFO" "Checking out '${version}'"
-    pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
     git clean -xdff
     git checkout "${version}"
 
@@ -68,15 +82,19 @@ generate_cassandra_versioned_docs() {
     if [ "$(cut -d'.' -f1 <<< "${doc_version}")" -lt 4 ]
     then
       # For Cassandra 3.11 docs use JDK 8
-      java_version="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java"
-      javac_version="/usr/lib/jvm/java-8-openjdk-amd64/bin/javac"
-      ant_cmd_options=""
-    else
+      java_version="/usr/lib/jvm/java-8-openjdk-$(dpkg --print-architecture)/jre/bin/java"
+      javac_version="/usr/lib/jvm/java-8-openjdk-$(dpkg --print-architecture)/bin/javac"
+    elif [ "$(cut -d'.' -f1 <<< "${doc_version}")" -lt 5 ]
+    then
       # For Cassandra 4.0+ docs use JDK 11
-      # TODO – from 5 onwards, we can detect the default JDK version from the build.xml file
-      java_version="/usr/lib/jvm/java-11-openjdk-amd64/bin/java"
-      javac_version="/usr/lib/jvm/java-11-openjdk-amd64/bin/javac"
+      java_version="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/bin/java"
+      javac_version="/usr/lib/jvm/java-11-openjdk-$(dpkg --print-architecture)/bin/javac"
       ant_cmd_options="-Duse.jdk11=true"
+    else
+      # from 5 onwards, we can detect the default JDK version from the build.xml file
+      java_version_=$(grep 'property\s*name="java.default"' build.xml |sed -ne 's/.*value="\([^"]*\)".*/\1/p')
+      java_version="/usr/lib/jvm/java-${java_version_}-openjdk-$(dpkg --print-architecture)/bin/java"
+      javac_version="/usr/lib/jvm/java-${java_version_}-openjdk-$(dpkg --print-architecture)/bin/javac"
     fi
     sudo update-alternatives --set java ${java_version}
     sudo update-alternatives --set javac ${javac_version}
@@ -84,9 +102,7 @@ generate_cassandra_versioned_docs() {
     log_message "INFO" "Using Java compiler version $(javac -version) to compile Cassandra JARs"
     ant realclean
     ant "${ant_cmd_options}" gen-asciidoc
-    popd > /dev/null
 
-    pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
     if [ "${commit_changes_to_branch}" = "enabled" ]
     then
       # Remove the doc/* directory entries in the .gitignore file so we can commit the generated docs to the working
@@ -204,7 +220,6 @@ render_site_content_to_html() {
   popd > /dev/null
 }
 
-
 prepare_site_html_for_publication() {
   pushd "${CASSANDRA_WEBSITE_DIR}" > /dev/null
 
@@ -212,7 +227,6 @@ prepare_site_html_for_publication() {
   log_message "INFO" "Moving site HTML to content/"
   mkdir -p content/doc
   cp -r site-content/build/html/* content/
-  #rm -f content/_/sed*
 
   # remove hardcoded domain name, and empty domain names first before we duplicate and documentation
   content_files_to_change=($(grep -rl 'https://cassandra.apache.org/' content/))
@@ -240,10 +254,10 @@ prepare_site_html_for_publication() {
   then
     log_message "INFO" "Moving versioned documentation HTML to content/doc"
     # FIXME – we can't generate tags yet as in-tree doc/antora.yml doesn't specify specifc tag versions, so just copy them for now (see same fixme in Dockerfile)
-    move_intree_document_directories "3.11" "3.11.11" "3.11.12" "3.11.13" "3.11.14" "3.11.15" "3.11.16"
-    move_intree_document_directories "4.0" "4.0.0" "4.0.1" "4.0.2" "4.0.3" "4.0.4" "4.0.5" "4.0.6" "4.0.7" "4.0.8" "4.0.9" "4.0.10" "4.0.11" 
-    move_intree_document_directories "4.1" "4.1.0" "4.1.1" "4.1.2" "4.1.3" "stable"
-    move_intree_document_directories "5.0" "5.0" "latest"
+    move_intree_document_directories "3.11" "3.11.11" "3.11.12" "3.11.13" "3.11.14" "3.11.15" "3.11.16" "3.11.17" "3.11.18" "3.11.19"
+    move_intree_document_directories "4.0" "4.0.0" "4.0.1" "4.0.2" "4.0.3" "4.0.4" "4.0.5" "4.0.6" "4.0.7" "4.0.8" "4.0.9" "4.0.10" "4.0.11" "4.0.12" "4.0.13" "4.0.14" "4.0.15" "4.0.16" "4.0.17"
+    move_intree_document_directories "4.1" "4.1.0" "4.1.1" "4.1.2" "4.1.3" "4.1.4" "4.1.5" "4.1.6" "4.1.7" "4.1.8" "stable"
+    move_intree_document_directories "5.0" "5.0" "5.0.1" "5.0.2" "5.0.3" "latest"
     move_intree_document_directories "trunk" "5.1"
   fi
 
@@ -405,7 +419,6 @@ then
   export DOCSEARCH_INDEX_VERSION=latest
 
   render_site_content_to_html
-
   prepare_site_html_for_publication
 fi
 
