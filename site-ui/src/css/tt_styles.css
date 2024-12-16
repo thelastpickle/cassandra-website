@@ -303,10 +303,12 @@ h4 {
   margin-bottom: 1.5em;
 }
 
+.native-protocol h2,
 .basic h2 {
   text-align: center;
 }
 
+.native-protocol h2.text-left,
 .basic h2.text-left {
   text-align: left;
 }

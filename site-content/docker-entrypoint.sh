@@ -204,6 +204,24 @@ render_site_content_to_html() {
   popd > /dev/null
 }
 
+generate_native_protocol_specs_pages() {
+  log_message "INFO" "Processing native protocols spec page"
+  for version in ${GENERATE_CASSANDRA_VERSIONS}
+    do
+      log_message "INFO" "Checking out '${version}'"
+      pushd "${CASSANDRA_WORKING_DIR}" > /dev/null
+      git clean -xdff
+      git checkout "${version}"
+
+      local doc_version=""
+      doc_version=$(grep 'property\s*name=\"base.version\"' build.xml |sed -ne 's/.*value=\"\([^"]*\)\".*/\1/p')
+      if [ -d "${CASSANDRA_WEBSITE_DIR}/site-content/build/html/Cassandra/$(cut -d'.' -f1-2 <<< "${doc_version}")/cassandra/native-protocol" ]
+      then
+        sudo /usr/local/bin/process-native-protocol-specs-in-docker.sh "$(cut -d'.' -f1-2 <<< "${doc_version}")"
+      fi
+      popd > /dev/null
+    done
+}
 
 prepare_site_html_for_publication() {
   pushd "${CASSANDRA_WEBSITE_DIR}" > /dev/null
@@ -314,6 +332,15 @@ run_preview_mode() {
     render_site_content_to_html
   fi
 
+  if [ "${COMMAND_GENERATE_DOCS}" = "run" ]
+  then
+    export -f generate_native_protocol_specs_pages
+    on_change_functions="${on_change_functions} && generate_native_protocol_specs_pages"
+
+    GENERATE_CASSANDRA_VERSIONS=$(cut -d' ' -f1 <<< "${GENERATE_CASSANDRA_VERSIONS}")
+  fi
+
+
   pushd "${CASSANDRA_WEBSITE_DIR}/site-content/build/html" > /dev/null
   live-server --port=5151 --host=0.0.0.0 --no-browser --no-css-inject --wait=2000 &
   popd > /dev/null
@@ -405,6 +432,10 @@ then
   export DOCSEARCH_INDEX_VERSION=latest
 
   render_site_content_to_html
+if [ "${COMMAND_GENERATE_DOCS}" = "run" ]
+then
+  generate_native_protocol_specs_pages
+fi
 
   prepare_site_html_for_publication
 fi
