@@ -113,8 +113,8 @@ generate_cassandra_versioned_docs() {
       git add .
       git commit -m "Automated commit: Generated nodetool and configuration documentation for version ${doc_version}." || log_message "INFO" "No new changes to commit."
     fi
-    popd > /dev/null
   done
+  popd > /dev/null
 }
 
 string_to_json() {
