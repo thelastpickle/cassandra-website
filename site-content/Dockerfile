@@ -42,6 +42,7 @@ RUN apt update && \
         git \
         gpg \
         wget \
+        curl \
         gcc \
         sudo
 
