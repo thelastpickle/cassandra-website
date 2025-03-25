@@ -2,9 +2,10 @@
   const script = document.createElement("script");
   const domain = window.location.hostname;
   script.type = "text/javascript";
-  script.src = "https://cassandra.apache.org/js/plausible.js";
+  script.src = "../assets/js/vendor/plausible.js";
   script.setAttribute("data-domain",domain);
   script.setAttribute("defer",'true');
   script.setAttribute("async",'true');
   document.getElementsByTagName("head")[0].appendChild(script);
 </script>
+<script src="../assets/js/vendor/jquery.js"></script>
