@@ -47,6 +47,7 @@ RUN apt update && \
         sudo
 
 RUN pip3 install jinja2 requests
+RUN ln -s /usr/bin/python3 /usr/bin/python
 
 # INSTALL nodejs and nvm
 RUN export PLATFORM=$(if [ "$TARGETPLATFORM" = "linux/amd64" ] ; then echo "x64"; else echo "arm64"; fi) \
