@@ -23,10 +23,10 @@
 ==== Maintained until 5.3.0 release
 
 [.btn.btn--alt]
-https://www.apache.org/dyn/closer.lua/cassandra/5.0.3/apache-cassandra-5.0.3-bin.tar.gz[5.0.3,window=blank]
+https://www.apache.org/dyn/closer.lua/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz[5.0.4,window=blank]
 
-(https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-bin.tar.gz.asc[pgp,window=blank], https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-bin.tar.gz.sha256[sha256,window=blank], https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-bin.tar.gz.sha512[sha512,window=blank]) +
-(https://www.apache.org/dyn/closer.lua/cassandra/5.0.3/apache-cassandra-5.0.3-src.tar.gz[source,window=blank]: https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-src.tar.gz.asc[pgp,window=blank], https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-src.tar.gz.sha256[sha256,window=blank], https://downloads.apache.org/cassandra/5.0.3/apache-cassandra-5.0.3-src.tar.gz.sha512[sha512,window=blank])
+(https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz.asc[pgp,window=blank], https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz.sha256[sha256,window=blank], https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-bin.tar.gz.sha512[sha512,window=blank]) +
+(https://www.apache.org/dyn/closer.lua/cassandra/5.0.4/apache-cassandra-5.0.4-src.tar.gz[source,window=blank]: https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-src.tar.gz.asc[pgp,window=blank], https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-src.tar.gz.sha256[sha256,window=blank], https://downloads.apache.org/cassandra/5.0.4/apache-cassandra-5.0.4-src.tar.gz.sha512[sha512,window=blank])
 ----------
 
 [openblock, inline50 inline-top]
