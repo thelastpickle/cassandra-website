@@ -252,12 +252,14 @@ prepare_site_html_for_publication() {
   # move around the in-tree docs if generated
   if [ "${COMMAND_GENERATE_DOCS}" = "run" ]
   then
+    log_message "INFO" "Renaming master dropdown version to website"
+    grep -lr 'index.html\">master</a>' content/Cassandra | xargs -I{} sed -i 's|index.html\">master</a>|index.html\">website</a>|' {}
     log_message "INFO" "Moving versioned documentation HTML to content/doc"
     # FIXME – we can't generate tags yet as in-tree doc/antora.yml doesn't specify specifc tag versions, so just copy them for now (see same fixme in Dockerfile)
     move_intree_document_directories "3.11" "3.11.11" "3.11.12" "3.11.13" "3.11.14" "3.11.15" "3.11.16" "3.11.17" "3.11.18" "3.11.19"
     move_intree_document_directories "4.0" "4.0.0" "4.0.1" "4.0.2" "4.0.3" "4.0.4" "4.0.5" "4.0.6" "4.0.7" "4.0.8" "4.0.9" "4.0.10" "4.0.11" "4.0.12" "4.0.13" "4.0.14" "4.0.15" "4.0.16" "4.0.17"
-    move_intree_document_directories "4.1" "4.1.0" "4.1.1" "4.1.2" "4.1.3" "4.1.4" "4.1.5" "4.1.6" "4.1.7" "4.1.8" "stable"
-    move_intree_document_directories "5.0" "5.0" "5.0.1" "5.0.2" "5.0.3" "latest"
+    move_intree_document_directories "4.1" "4.1.0" "4.1.1" "4.1.2" "4.1.3" "4.1.4" "4.1.5" "4.1.6" "4.1.7" "4.1.8"
+    move_intree_document_directories "5.0" "5.0.1" "5.0.2" "5.0.3" "5.0.4" "stable" "latest"
     move_intree_document_directories "trunk" "5.1"
   fi
 
@@ -291,7 +293,7 @@ move_intree_document_directories() {
 
     # Check if our source directory is empty and if it is clean it up.
     # Otherwise, leave it as is so we can see if we have missed a version.
-    if [ -z "$(ls -A ${source_base_dir})" ]
+    if [ -d "${source_base_dir}" ] && [ -z "$(ls -A ${source_base_dir})" ]
     then
       rmdir "${source_base_dir}"
     fi

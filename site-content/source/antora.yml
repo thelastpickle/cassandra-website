@@ -1,4 +1,4 @@
 name: _
-version: website
+version: master
 nav:
 - modules/ROOT/main-nav.adoc
