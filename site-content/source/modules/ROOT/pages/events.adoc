@@ -58,6 +58,32 @@ https://www.meetup.com/cassandra-global/[See All Meetups,window=_blank]
 [openblock,card-header]
 ------
 [discrete]
+=== Community Over Code 2026
+[discrete]
+==== October 11-13, 2026
+------
+[openblock,card-content]
+------
+image:events/20261011-coc-glasgow-300x300.png[Community Over Code 2026 Glasgow]
+
+Twenty Apache Cassandra® talks over three days in Glasgow, at the ASF's flagship conference.
+
+[openblock,card-btn card-btn--events]
+--------
+[.btn.btn--alt]
+xref:events/20261011-community-over-code-glasgow.adoc[Go to event]
+--------
+
+------
+----
+//end card
+
+//start card
+[openblock,card shadow relative test]
+----
+[openblock,card-header]
+------
+[discrete]
 === Cassandra Summit 2023
 [discrete]
 ==== December 12-13, 2023
